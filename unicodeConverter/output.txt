@@ -1,0 +1,995 @@
+INTEL 80386 PROGRAMMER'S REFERENCE MANUAL 1986
+
+Intel Corporation makes no warranty for the use of its products and
+assumes no responsibility for any errors which may appear in this document
+nor does it make a commitment to update the information contained herein.
+
+Intel retains the right to make changes to these specifications at any
+time, without notice.
+
+Contact your local sales office to obtain the latest specifications before
+placing your order.
+
+The following are trademarks of Intel Corporation and may only be used to
+identify Intel Products:
+
+Above, BITBUS, COMMputer, CREDIT, Data Pipeline, FASTPATH, Genius, i, ,
+ICE, iCEL, iCS, iDBP, iDIS, IICE, iLBX, im, iMDDX, iMMX, Inboard,
+Insite, Intel, intel, intelBOS, Intel Certified, Intelevision,
+inteligent Identifier, inteligent Programming, Intellec, Intellink,
+iOSP, iPDS, iPSC, iRMK, iRMX, iSBC, iSBX, iSDM, iSXM, KEPROM, Library
+Manager, MAPNET, MCS, Megachassis, MICROMAINFRAME, MULTIBUS, MULTICHANNEL,
+MULTIMODULE, MultiSERVER, ONCE, OpenNET, OTP, PC BUBBLE, Plug-A-Bubble,
+PROMPT, Promware, QUEST, QueX, Quick-Pulse Programming, Ripplemode, RMX/80,
+RUPI, Seamless, SLD, SugarCube, SupportNET, UPI, and VLSiCEL, and the
+combination of ICE, iCS, iRMX, iSBC, iSBX, iSXM, MCS, or UPI and a numerical
+suffix, 4-SITE.
+
+MDS is an ordering code only and is not used as a product name or
+trademark. MDS(R) is a registered trademark of Mohawk Data Sciences
+Corporation.
+
+Additional copies of this manual or other Intel literature may be obtained
+from:
+
+Intel Corporation
+Literature Distribution
+Mail Stop SC6-59
+3065 Bowers Avenue
+Santa Clara, CA 95051
+
+(c)INTEL CORPORATION 1987    CG-5/26/87
+
+
+Customer Support
+
+
+
+Customer Support is Intel's complete support service that provides Intel
+customers with hardware support, software support, customer training, and
+consulting services. For more information contact your local sales offices.
+
+After a customer purchases any system hardware or software product,
+service and support become major factors in determining whether that
+product will continue to meet a customer's expectations. Such support
+requires an international support organization and a breadth of programs
+to meet a variety of customer needs. As you might expect, Intel's customer
+support is quite extensive. It includes factory repair services and
+worldwide field service offices providing hardware repair services,
+software support services, customer training classes, and consulting
+services.
+
+Hardware Support Services
+
+Intel is committed to providing an international service support package
+through a wide variety of service offerings available from Intel Hardware
+Support.
+
+Software Support Services
+
+Intel's software support consists of two levels of contracts. Standard
+support includes TIPS (Technical Information Phone Service), updates and
+subscription service (product-specific troubleshooting guides and COMMENTS
+Magazine). Basic support includes updates and the subscription service.
+Contracts are sold in environments which represent product groupings
+(i.e., iRMX environment).
+
+Consulting Services
+
+Intel provides field systems engineering services for any phase of your
+development or support effort. You can use our systems engineers in a
+variety of ways ranging from assistance in using a new product, developing
+an application, personalizing training, and customizing or tailoring an
+Intel product to providing technical and management consulting. Systems
+Engineers are well versed in technical areas such as microcommunications,
+real-time applications, embedded microcontrollers, and network services.
+You know your application needs; we know our products. Working together we
+can help you get a successful product to market in the least possible time.
+
+Customer Training
+
+Intel offers a wide range of instructional programs covering various
+aspects of system design and implementation. In just three to ten days a
+limited number of individuals learn more in a single workshop than in
+weeks of self-study. For optimum convenience, workshops are scheduled
+regularly at Training Centers woridwide or we can take our workshops to
+you for on-site instruction. Covering a wide variety of topics, Intel's
+major course categories include: architecture and assembly language,
+programming and operating systems, bitbus and LAN applications.
+
+Training Center Locations
+
+To obtain a complete catalog of our workshops, call the nearest Training
+Center in your area.
+
+Boston                    (617) 692-1000
+Chicago                   (312) 310-5700
+San Francisco             (415) 940-7800
+Washington D.C.           (301) 474-2878
+Isreal                    (972) 349-491-099
+Tokyo                     03-437-6611
+Osaka (Call Tokyo)        03-437-6611
+Toronto, Canada           (416) 675-2105
+London                    (0793) 696-000
+Munich                    (089) 5389-1
+Paris                     (01) 687-22-21
+Stockholm                 (468) 734-01-00
+Milan                     39-2-82-44-071
+Benelux (Rotterdam)       (10) 21-23-77
+Copenhagen                (1) 198-033
+Hong Kong                 5-215311-7
+
+
+Table of Contents
+
+Chapter 1  Introduction to the 80386
+
+1.1  Organization of This Manual
+      1.1.1  Part I  Applications Programming
+      1.1.2  Part II  Systems Programming
+      1.1.3  Part III  Compatibility
+      1.1.4  Part IV  Instruction Set
+      1.1.5  Appendices
+
+1.2  Related Literature
+1.3  Notational Conventions
+      1.3.1  Data-Structure Formats
+      1.3.2  Undefined Bits and Software Compatibility
+      1.3.3  Instruction Operands
+      1.3.4  Hexadecimal Numbers
+      1.3.5  Sub- and Super-Scripts
+
+                     PART I    APPLICATIONS PROGRAMMING                   
+
+Chapter 2  Basic Programming Model
+
+2.1  Memory Organization and Segmentation
+      2.1.1  The"Flat" Model
+      2.1.2  The Segmented Model
+
+2.2  Data Types
+2.3  Registers
+      2.3.1  General Registers
+      2.3.2  Segment Registers
+      2.3.3  Stack Implementation
+      2.3.4  Flags Register
+              2.3.4.1  Status Flags
+              2.3.4.2  Control Flag
+              2.3.4.3  Instruction Pointer
+
+2.4  Instruction Format
+2.5  Operand Selection
+      2.5.1  Immediate Operands
+      2.5.2  Register Operands
+      2.5.3  Memory Operands
+              2.5.3.1  Segment Selection
+              2.5.3.2  Effective-Address Computation
+
+2.6  Interrupts and Exceptions
+
+Chapter 3  Applications Instruction Set
+
+3.1  Data Movement Instructions
+      3.1.1  General-Purpose Data Movement Instructions
+      3.1.2  Stack Manipulation Instructions
+      3.1.3  Type Conversion Instructions
+
+3.2  Binary Arithmetic Instructions
+      3.2.1  Addition and Subtraction Instructions
+      3.2.2  Comparison and Sign Change Instruction
+      3.2.3  Multiplication Instructions
+      3.2.4  Division Instructions
+
+3.3  Decimal Arithmetic Instructions
+      3.3.1  Packed BCD Adjustment Instructions
+      3.3.2  Unpacked BCD Adjustment Instructions
+
+3.4  Logical Instructions
+      3.4.1  Boolean Operation Instructions
+      3.4.2  Bit Test and Modify Instructions
+      3.4.3  Bit Scan Instructions
+      3.4.4  Shift and Rotate Instructions
+              3.4.4.1  Shift Instructions
+              3.4.4.2  Double-Shift Instructions
+              3.4.4.3  Rotate Instructions
+              3.4.4.4  Fast"bit-blt" Using Double Shift
+                         Instructions
+              3.4.4.5  Fast Bit-String Insert and Extract
+
+      3.4.5  Byte-Set-On-Condition Instructions
+      3.4.6  Test Instruction
+
+3.5  Control Transfer Instructions
+      3.5.1  Unconditional Transfer Instructions
+              3.5.1.1  Jump Instruction
+              3.5.1.2  Call Instruction
+              3.5.1.3  Return and Return-From-Interrupt Instruction
+
+      3.5.2  Conditional Transfer Instructions
+              3.5.2.1  Conditional Jump Instructions
+              3.5.2.2  Loop Instructions
+              3.5.2.3  Executing a Loop or Repeat Zero Times
+
+      3.5.3  Software-Generated Interrupts
+
+3.6  String and Character Translation Instructions
+      3.6.1  Repeat Prefixes
+      3.6.2  Indexing and Direction Flag Control
+      3.6.3  String Instructions
+
+3.7  Instructions for Block-Structured Languages
+3.8  Flag Control Instructions
+      3.8.1  Carry and Direction Flag Control Instructions
+      3.8.2  Flag Transfer Instructions
+
+3.9  Coprocessor Interface Instructions
+3.10 Segment Register Instructions
+      3.10.1  Segment-Register Transfer Instructions
+      3.10.2  Far Control Transfer Instructions
+      3.10.3  Data Pointer Instructions
+
+3.11  Miscellaneous Instructions
+       3.11.1  Address Calculation Instruction
+       3.11.2  No-Operation Instruction
+       3.11.3  Translate Instruction
+
+                       PART II    SYSTEMS PROGRAMMING                     
+
+Chapter 4  Systems Architecture
+
+4.1  Systems Registers
+      4.1.1  Systems Flags
+      4.1.2  Memory-Management Registers
+      4.1.3  Control Registers
+      4.1.4  Debug Register
+      4.1.5  Test Registers
+
+4.2  Systems Instructions
+
+Chapter 5  Memory Management
+
+5.1  Segment Translation
+      5.1.1  Descriptors
+      5.1.2  Descriptor Tables
+      5.1.3  Selectors
+      5.1.4  Segment Registers
+
+5.2  Page Translation
+      5.2.1  Page Frame
+      5.2.2  Linear Address
+      5.2.3  Page Tables
+      5.2.4  Page-Table Entries
+              5.2.4.1  Page Frame Address
+              5.2.4.2  Present Bit
+              5.2.4.3  Accessed and Dirty Bits
+              5.2.4.4  Read/Write and User/Supervisor Bits
+
+      5.2.5  Page Translation Cache
+
+5.3  Combining Segment and Page Translation
+      5.3.1  "Flat" Architecture
+      5.3.2  Segments Spanning Several Pages
+      5.3.3  Pages Spanning Several Segments
+      5.3.4  Non-Aligned Page and Segment Boundaries
+      5.3.5  Aligned Page and Segment Boundaries
+      5.3.6  Page-Table per Segment
+
+Chapter 6  Protection
+
+6.1  Why Protection?
+6.2  Overview of 80386 Protection Mechanisms
+6.3  Segment-Level Protection
+      6.3.1  Descriptors Store Protection Parameters
+              6.3.1.1  Type Checking
+              6.3.1.2  Limit Checking
+              6.3.1.3  Privilege Levels
+
+      6.3.2  Restricting Access to Data
+              6.3.2.1  Accessing Data in Code Segments
+
+      6.3.3  Restricting Control Transfers
+      6.3.4  Gate Descriptors Guard Procedure Entry Points
+              6.3.4.1  Stack Switching
+              6.3.4.2  Returning from a Procedure
+
+      6.3.5  Some Instructions are Reserved for Operating System
+              6.3.5.1  Privileged Instructions
+              6.3.5.2  Sensitive Instructions
+
+      6.3.6  Instructions for Pointer Validation
+              6.3.6.1  Descriptor Validation
+              6.3.6.2  Pointer Integrity and RPL
+
+6.4  Page-Level Protection
+      6.4.1  Page-Table Entries Hold Protection Parameters
+              6.4.1.1  Restricting Addressable Domain
+              6.4.1.2  Type Checking
+
+      6.4.2  Combining Protection of Both Levels of Page Tables
+      6.4.3  Overrides to Page Protection
+
+6.5  Combining Page and Segment Protection
+
+Chapter 7  Multitasking
+
+7.1  Task State Segment
+7.2  TSS Descriptor
+7.3  Task Register
+7.4  Task Gate Descriptor
+7.5  Task Switching
+7.6  Task Linking
+      7.6.1  Busy Bit Prevents Loops
+      7.6.2  Modifying Task Linkages
+
+7.7  Task Address Space
+      7.7.1  Task Linear-to-Physical Space Mapping
+      7.7.2  Task Logical Address Space
+
+Chapter 8    Input/Output
+
+8.1  I/O Addressing
+      8.1.1  I/O Address Space
+      8.1.2  Memory-Mapped I/O
+
+8.2  I/O Instructions
+      8.2.1  Register I/O Instructions
+      8.2.2  Block I/O Instructions
+
+8.3  Protection and I/O
+      8.3.1  I/O Privilege Level
+      8.3.2  I/O Permission Bit Map
+
+Chapter 9  Exceptions and Interrupts
+
+9.1  Identifying Interrupts
+9.2  Enabling and Disabling Interrupts
+      9.2.1  NMI Masks Further NMls
+      9.2.2  IF Masks INTR
+      9.2.3  RF Masks Debug Faults
+      9.2.4  MOV or POP to SS Masks Some Interrupts and Exceptions
+
+9.3  Priority Among Simultaneous Interrupts and Exceptions
+9.4  Interrupt Descriptor Table
+9.5  IDT Descriptors
+9.6  Interrupt Tasks and Interrupt Procedures
+      9.6.1  Interrupt Procedures
+              9.6.1.1  Stack of Interrupt Procedure
+              9.6.1.2  Returning from an Interrupt Procedure
+              9.6.1.3  Flags Usage by Interrupt Procedure
+              9.6.1.4  Protection in Interrupt Procedures
+
+      9.6.2  Interrupt Tasks
+
+9.7  Error Code
+9.8  Exception Conditions
+      9.8.1  Interrupt 0  Divide Error
+      9.8.2  Interrupt 1  Debug Exceptions
+      9.8.3  Interrupt 3  Breakpoint
+      9.8.4  Interrupt 4  Overflow
+      9.8.5  Interrupt 5  Bounds Check
+      9.8.6  Interrupt 6  Invalid Opcode
+      9.8.7  Interrupt 7  Coprocessor Not Available
+      9.8.8  Interrupt 8  Double Fault
+      9.8.9  Interrupt 9  Coprocessor Segment Overrun
+      9.8.10 Interrupt 10  Invalid TSS
+      9.8.11 Interrupt 11  Segment Not Present
+      9.8.12 Interrupt 12  Stack Exception
+      9.8.13 Interrupt 13  General Protection Exception
+      9.8.14 Interrupt 14  Page Fault
+              9.8.14.1  Page Fault during Task Switch
+              9.8.14.2  Page Fault with Inconsistent Stack Pointer
+
+      9.8.15 Interrupt 16  Coprocessor Error
+
+9.9  Exception Summary
+
+9.10  Error Code Summary
+
+Chapter 10  Initialization
+
+10.1  Processor State after Reset
+10.2  Software Initialization for Real-Address Mode
+       10.2.1  Stack
+       10.2.2  Interrupt Table
+       10.2.3  First Instructions
+
+10.3  Switching to Protected Mode
+10.4  Software Initialization for Protected Mode
+       10.4.1  Interrupt Descriptor Table
+       10.4.2  Stack
+       10.4.3  Global Descriptor Table
+       10.4.4  Page Tables
+       10.4.5  First Task
+
+10.5  Initialization Example
+10.6  TLB Testing
+       10.6.1  Structure of the TLB
+       10.6.2  Test Registers
+       10.6.3  Test Operations
+
+Chapter 11  Coprocessing and Multiprocessing
+
+11.1  Coprocessing
+       11.1.1  Coprocessor Identification
+       11.1.2  ESC and WAIT Instructions
+       11.1.3  EM and MP Flags
+       11.1.4  The Task-Switched Flag
+       11.1.5  Coprocessor Exceptions
+                11.1.5.1  Interrupt 7  Coprocessor Not Available
+                11.1.5.2  Interrupt 9  Coprocessor Segment Overrun
+                11.1.5.3  Interrupt 16  Coprocessor Error
+
+11.2  General Multiprocessing
+       11.2.1  LOCK and the LOCK# Signal
+       11.2.2  Automatic Locking
+       11.2.3  Cache Considerations
+
+Chapter 12  Debugging
+
+12.1  Debugging Features of the Architecture
+12.2  Debug Registers
+       12.2.1  Debug Address Registers (DRO-DR3)
+       12.2.2  Debug Control Register (DR7)
+       12.2.3  Debug Status Register (DR6)
+       12.2.4  Breakpoint Field Recognition
+
+12.3  Debug Exceptions
+       12.3.1  Interrupt 1  Debug Exceptions
+                12.3.1.1  Instruction Address Breakpoint
+                12.3.1.2  Data Address Breakpoint
+                12.3.1.3  General Detect Fault
+                12.3.1.4  Single-Step Trap
+                12.3.1.5  Task Switch Breakpoint
+
+       12.3.2  Interrupt 3  Breakpoint Exception
+
+                          PART III    COMPATIBILITY                       
+
+Chapter 13  Executing 80286 Protected-Mode Code
+
+13.1  80286 Code Executes as a Subset of the 80386
+13.2  Two Ways to Execute 80286 Tasks
+13.3  Differences from 80286
+       13.3.1  Wraparound of 80286 24-Bit Physical Address Space
+       13.3.2  Reserved Word of Descriptor
+       13.3.3  New Descriptor Type Codes
+       13.3.4  Restricted Semantics of LOCK
+       13.3.5  Additional Exceptions
+
+Chapter 14  80386 Real-Address Mode
+
+14.1  Physical Address Formation
+14.2  Registers and Instructions
+14.3  Interrupt and Exception Handling
+14.4  Entering and Leaving Real-Address Mode
+       14.4.1  Switching to Protected Mode
+
+14.5  Switching Back to Real-Address Mode
+14.6  Real-Address Mode Exceptions
+14.7  Differences from 8086
+14.8  Differences from 80286 Real-Address Mode
+       14.8.1  Bus Lock
+       14.8.2  Location of First Instruction
+       14.8.3  Initial Values of General Registers
+       14.8.4  MSW Initialization
+
+Chapter 15  Virtual 8088 Mode
+
+15.1  Executing 8086 Code
+       15.1.1  Registers and Instructions
+       15.1.2  Linear Address Formation
+
+15.2  Structure of a V86 Task
+       15.2.1  Using Paging for V86 Tasks
+       15.2.2  Protection within a V86 Task
+
+15.3  Entering and Leaving V86 Mode
+       15.3.1  Transitions Through Task Switches
+       15.3.2  Transitions Through Trap Gates and Interrupt Gates
+
+15.4  Additional Sensitive Instructions
+       15.4.1  Emulating 8086 Operating System Calls
+       15.4.2  Virtualizing the Interrupt-Enable Flag
+
+15.5  Virtual I/O
+       15.5.1  I/O-Mapped I/O
+       15.5.2  Memory-Mapped I/O
+       15.5.3  Special I/O Buffers
+
+15.6  Differences from 8086
+15.7  Differences from 80286 Real-Address Mode
+
+Chapter 16  Mixing 16-Bit and 32-Bit Code
+
+16.1  How the 80386 Implements 16-Bit and 32-Bit Features
+16.2  Mixing 32-Bit and 16-Bit Operations
+16.3  Sharing Data Segments among Mixed Code Segments
+16.4  Transferring Control among Mixed Code Segments
+       16.4.1  Size of Code-Segment Pointer
+       16.4.2  Stack Management for Control Transfers
+                16.4.2.1  Controlling the Operand-Size for a CALL
+                16.4.2.2  Changing Size of Call
+
+       16.4.3  Interrupt Control Transfers
+       16.4.4  Parameter Translation
+       16.4.5  The Interface Procedure
+
+                         PART IV    INSTRUCTION SET                       
+
+Chapter 17  80386 Instruction Set
+
+17.1  Operand-Size and Address-Size Attributes
+       17.1.1  Default Segment Attribute
+       17.1.2  Operand-Size and Address-Size Instruction Prefixes
+       17.1.3  Address-Size Attribute for Stack
+
+17.2  Instruction Format
+       17.2.1  ModR/M and SIB Bytes
+       17.2.2  How to Read the Instruction Set Pages
+                17.2.2.1  Opcode
+                17.2.2.2  Instruction
+                17.2.2.3  Clocks
+                17.2.2.4  Description
+                17.2.2.5  Operation
+                17.2.2.6  Description
+                17.2.2.7  Flags Affected
+                17.2.2.8  Protected Mode Exceptions
+                17.2.2.9  Real Address Mode Exceptions
+                17.2.2.10 Virtual-8086 Mode Exceptions
+
+Instruction Sets
+
+AAA
+AAD
+AAM
+AAS
+ADC
+ADD
+AND
+ARPL
+BOUND
+BSF
+BSR
+BT
+BTC
+BTR
+BTS
+CALL
+CBW/CWDE
+CLC
+CLD
+CLI
+CLTS
+CMC
+CMP
+CMPS/CMPSB/CMPSW/CMPSD
+CWD/CDQ
+DAA
+DAS
+DEC
+DIV
+ENTER
+HLT
+IDIV
+IMUL
+IN
+INC
+INS/INSB/INSW/INSD
+INT/INTO
+IRET/IRETD
+Jcc
+JMP
+LAHF
+LAR
+LEA
+LEAVE
+LGDT/LIDT
+LGS/LSS/LDS/LES/LFS
+LLDT
+LMSW
+LOCK
+LODS/LODSB/LODSW/LODSD
+LOOP/LOOPcond
+LSL
+LTR
+MOV
+MOV
+MOVS/MOVSB/MOVSW/MOVSD
+MOVSX
+MOVZX
+MUL
+NEG
+NOP
+NOT
+OR
+OUT
+OUTS/OUTSB/OUTSW/OUTSD
+POP
+POPA/POPAD
+POPF/POPFD
+PUSH
+PUSHA/PUSHAD
+PUSHF/PUSHFD
+RCL/RCR/ROL/ROR
+REP/REPE/REPZ/REPNE/REPNZ
+RET
+SAHF
+SAL/SAR/SHL/SHR
+SBB
+SCAS/SCASB/SCASW/SCASD
+SETcc
+SGDT/SIDT
+SHLD
+SHRD
+SLDT
+SMSW
+STC
+STD
+STI
+STOS/STOSB/STOSW/STOSD
+STR
+SUB
+TEST
+VERR,VERW
+WAIT
+XCHG
+XLAT/XLATB
+XOR
+
+Appendix A  Opcode Map
+
+Appendix B  Complete Flag Cross-Reference
+
+Appendix C  Status Flag Summary
+
+Appendix D  Condition Codes
+
+
+Figures
+
+1-1     Example Data Structure
+
+2-1     Two-Component Pointer
+2-2     Fundamental Data Types
+2-3     Bytes, Words, and Doublewords in Memory
+2-4     80386 Data Types
+2-5     80386 Applications Register Set
+2-6     Use of Memory Segmentation
+2-7     80386 Stack
+2-8     EFLAGS Register
+2-9     Instruction Pointer Register
+2-10    Effective Address Computation
+
+3-1     PUSH
+3-2     PUSHA
+3-3     POP
+3-4     POPA
+3-5     Sign Extension
+3-6     SAL and SHL
+3-7     SHR
+3-8     SAR
+3-9     Using SAR to Simulate IDIV
+3-10    Shift Left Double
+3-11    Shift Right Double
+3-12    ROL
+3-13    ROR
+3-14    RCL
+3-15    RCR
+3-16    Formal Definition of the ENTER Instruction
+3-17    Variable Access in Nested Procedures
+3-18    Stack Frame for MAIN at Level 1
+3-19    Stack Frame for Prooedure A
+3-20    Stack Frame for Procedure B at Level 3 Called from A
+3-21    Stack Frame for Procedure C at Level 3 Called from B
+3-22    LAHF and SAHF
+3-23    Flag Format for PUSHF and POPF
+
+4-1     Systems Flags of EFLAGS Register
+4-2     Control Registers
+
+5-1     Address Translation Overview
+5-2     Segment Translation
+5-3     General Segment-Descriptor Format
+5-4     Format of Not-Present Descriptor
+5-5     Descriptor Tables
+5-6     Format of a Selector
+5-7     Segment Registers
+5-8     Format of a Linear Address
+5-9     Page Translation
+5-10    Format of a Page Table Entry
+5-11    Invalid Page Table Entry
+5-12    80386 Addressing Mechanism
+5-13    Descriptor per Page Table
+
+6-1     Protection Fields of Segment Descriptors
+6-2     Levels of Privilege
+6-3     Privilege Check for Data Access
+6-4     Privilege Check for Control Transfer without Gate
+6-5     Format of 80386 Call Gate
+6-6     Indirect Transfer via Call Gate
+6-7     Privilege Check via Call Gate
+6-8     Initial Stack Pointers of TSS
+6-9     Stack Contents after an Interievel Call
+6-10    Protection Fields of Page Table Entries
+
+7-1     80386 32-Bit Task State Segment
+7-2     TSS Descriptor for 32-Bit TSS
+7-3     Task Register
+7-4     Task Gate Descriptor
+7-5     Task Gate Indirectly Identifies Task
+7-6     Partially-Overlapping Linear Spaces
+
+8-1     Memory-Mapped I/O
+8-2     I/O Address Bit Map
+
+9-1     IDT Register and Table
+9-2     Pseudo-Descriptor Format for LIDT and SIDT
+9-3     80386 IDT Gate Descriptors
+9-4     Interrupt Vectoring for Procedures
+9-5     Stack Layout after Exception of Interrupt
+9-6     Interrupt Vectoring for Tasks
+9-7     Error Code Format
+9-8     Page-Fault Error Code Format
+9-9     CR2 Format
+
+10-1    Contents of EDX after RESET
+10-2    Initial Contents of CRO
+10-3    TLB Structure
+10-4    Test Registers
+
+12-1    Debug Registers
+
+14-1    Real-Address Mode Address Formation
+
+15-1    V86 Mode Address Formation
+15-2    Entering and Leaving an 8086 Program
+15-3    PL 0 Stack after Interrupt in V86 Task
+
+16-1    Stack after Far 16-Bit and 32-Bit Calls
+
+17-1    80386 Instruction Format
+17-2    ModR/M and SIB Byte Formats
+17-3    Bit Offset for BIT[EAX, 21]
+17-4    Memory Bit Indexing
+
+
+Tables
+
+2-1      Default Segment Register Selection Rules
+2-2      80386 Reserved Exceptions and Interrupts
+
+3-1      Bit Test and Modify Instructions
+3-2      Interpretation of Conditional Transfers
+
+6-1      System and Gate Descriptor Types
+6-2      Useful Combinations of E, G, and B Bits
+6-3      Interievel Return Checks
+6-4      Valid Descriptor Types for LSL
+6-5      Combining Directory and Page Protection
+
+7-1      Checks Made during a Task Switch
+7-2      Effect of Task Switch on BUSY, NT, and Back-Link
+
+9-1      Interrupt and Exception ID Assignments
+9-2      Priority Among Simultaneous Interrupts and Exceptions
+9-3      Double-Fault Detection Classes
+9-4      Double-Fault Definition
+9-5      Conditions That Invalidate the TSS
+9-6      Exception Summary
+9-7      Error-Code Summary
+
+10-1     Meaning of D, U, and W Bit Pairs
+
+12-1     Breakpeint Field Recognition Examples
+12-2     Debug Exception Conditions
+
+14-1     80386 Real-Address Mode Exceptions
+14-2     New 80386 Exceptions
+
+17-1     Effective Size Attributes
+17-2     16-Bit Addressing Forms with the ModR/M Byte
+17-3     32-Bit Addressing Forms with the ModR/M Byte
+17-4     32-Bit Addressing Forms with the SIB Byte
+17-5     Task Switch Times for Exceptions
+17-6     80386 Exceptions
+
+
+Chapter 1  Introduction to the 80386
+
+
+
+The 80386 is an advanced 32-bit microprocessor optimized for multitasking
+operating systems and designed for applications needing very high
+performance. The 32-bit registers and data paths support 32-bit addresses
+and data types. The processor can address up to four gigabytes of physical
+memory and 64 terabytes (2^(46) bytes) of virtual memory. The on-chip
+memory-management facilities include address translation registers,
+advanced multitasking hardware, a protection mechanism, and paged virtual
+memory. Special debugging registers provide data and code breakpoints even
+in ROM-based software.
+
+
+1.1  Organization of This Manual
+
+This book presents the architecture of the 80386 in five parts:
+
+   Part I       Applications Programming
+   Part II      Systems Programming
+   Part III     Compatibility
+   Part IV      Instruction Set
+   Appendices
+
+These divisions are determined in part by the architecture itself and in
+part by the different ways the book will be used. As the following table
+indicates, the latter two parts are intended as reference material for
+programmers actually engaged in the process of developing software for the
+80386. The first three parts are explanatory, showing the purpose of
+architectural features, developing terminology and concepts, and describing
+instructions as they relate to specific purposes or to specific
+architectural features.
+
+Explanation                Part I    Applications Programming
+                           Part II   Systems Programming
+                           Part III  Compatibility
+
+Reference                  Part IV   Instruction Set
+                           Appendices
+
+The first three parts follow the execution modes and protection features of
+the 80386 CPU. The distinction between applications features and systems
+features is determined by the protection mechanism of the 80386. One purpose
+of protection is to prevent applications from interfering with the operating
+system; therefore, the processor makes certain registers and instructions
+inaccessible to applications programs. The features discussed in Part I are
+those that are accessible to applications; the features in Part II are
+available only to systems software that has been given special privileges or
+in unprotected systems.
+
+The processing mode of the 80386 also determines the features that are
+accessible. The 80386 has three processing modes:
+
+   1.  Protected Mode.
+   2.  Real-Address Mode.
+   3.  Virtual 8086 Mode.
+
+Protected mode is the natural 32-bit environment of the 80386 processor. In
+this mode all instructions and features are available.
+
+Real-address mode (often called just "real mode") is the mode of the
+processor immediately after RESET. In real mode the 80386 appears to
+programmers as a fast 8086 with some new instructions. Most applications of
+the 80386 will use real mode for initialization only.
+
+Virtual 8086 mode (also called V86 mode) is a dynamic mode in the sense
+that the processor can switch repeatedly and rapidly between V86 mode and
+protected mode. The CPU enters V86 mode from protected mode to execute an
+8086 program, then leaves V86 mode and enters protected mode to continue
+executing a native 80386 program.
+
+The features that are available to applications programs in protected mode
+and to all programs in V86 mode are the same. These features form the
+content of Part I. The additional features that are available to systems
+software in protected mode form Part II. Part III explains real-address
+mode and V86 mode, as well as how to execute a mix of 32-bit and 16-bit
+programs.
+
+Available in All Modes             Part I  Applications Programming
+
+Available in Protected             Part II  Systems Programming
+Mode Only
+
+Compatibility Modes                Part III  Compatibility
+
+
+1.1.1  Part I  Applications Programming
+
+This part presents those aspects of the architecture that are customarily
+used by applications programmers.
+
+Chapter 2  Basic Programming Model: Introduces the models of memory
+organization. Defines the data types. Presents the register set used by
+applications. Introduces the stack. Explains string operations. Defines the
+parts of an instruction. Explains addressing calculations. Introduces
+interrupts and exceptions as they may apply to applications programming.
+
+Chapter 3  Application Instruction Set: Surveys the instructions commonly
+used for applications programming. Considers instructions in functionally
+related groups; for example, string instructions are considered in one
+section, while control-transfer instructions are considered in another.
+Explains the concepts behind the instructions. Details of individual
+instructions are deferred until Part IV, the instruction-set reference.
+
+
+1.1.2  Part II  Systems Programming
+
+This part presents those aspects of the architecture that are customarily
+used by programmers who write operating systems, device drivers, debuggers,
+and other software that supports applications programs in the protected mode
+of the 80386.
+
+Chapter 4  Systems Architecture: Surveys the features of the 80386 that 
+are used by systems programmers. Introduces the remaining registers and data
+structures of the 80386 that were not discussed in Part I. Introduces the
+systems-oriented instructions in the context of the registers and data
+structures they support. Points to the chapter where each register, data
+structure, and instruction is considered in more detail.
+
+Chapter 5  Memory Management: Presents details of the data structures,
+registers, and instructions that support virtual memory and the concepts of
+segmentation and paging. Explains how systems designers can choose a model
+of memory organization ranging from completely linear ("flat") to fully
+paged and segmented.
+
+Chapter 6  Protection: Expands on the memory management features of the
+80386 to include protection as it applies to both segments and pages.
+Explains the implementation of privilege rules, stack switching, pointer
+validation, user and supervisor modes. Protection aspects of multitasking
+are deferred until the following chapter.
+
+Chapter 7  Multitasking: Explains how the hardware of the 80386 supports
+multitasking with context-switching operations and intertask protection.
+
+Chapter 8  Input/Output: Reveals the I/O features of the 80386, including
+I/O instructions, protection as it relates to I/O, and the I/O permission
+map.
+
+Chapter 9  Exceptions and Interrupts: Explains the basic interrupt
+mechanisms of the 80386. Shows how interrupts and exceptions relate to
+protection. Discusses all possible exceptions, listing causes and including
+information needed to handle and recover from the exception.
+
+Chapter 10  Initialization: Defines the condition of the processor after
+RESET or power-up. Explains how to set up registers, flags, and data
+structures for either real-address mode or protected mode. Contains an
+example of an initialization program.
+
+Chapter 11  Coprocessing and Multiprocessing: Explains the instructions
+and flags that support a numerics coprocessor and multiple CPUs with shared
+memory.
+
+Chapter 12  Debugging: Tells how to use the debugging registers of the
+80386.
+
+
+1.1.3  Part III  Compatibility
+
+Other parts of the book treat the processor primarily as a 32-bit machine,
+omitting for simplicity its facilities for 16-bit operations. Indeed, the
+80386 is a 32-bit machine, but its design fully supports 16-bit operands and
+addressing, too. This part completes the picture of the 80386 by explaining
+the features of the architecture that support 16-bit programs and 16-bit
+operations in 32-bit programs. All three processor modes are used to
+execute 16-bit programs: protected mode can directly execute 16-bit 80286
+protected mode programs, real mode executes 8086 programs and real-mode
+80286 programs, and virtual 8086 mode executes 8086 programs in a
+multitasking environment with other 80386 protected-mode programs. In
+addition, 32-bit and 16-bit modules and individual 32-bit and 16-bit
+operations can be mixed in protected mode.
+
+Chapter 13  Executing 80286 Protected-Mode Code: In its protected mode,
+the 80386 can execute complete 80286 protected-mode systems, because 80286
+capabilities are a subset of 80386 capabilities.
+
+Chapter 14  80386 Real-Address Mode: Explains the real mode of the 80386
+CPU. In this mode the 80386 appears as a fast real-mode 80286 or fast 8086
+enhanced with additional instructions.
+
+Chapter 15  Virtual 8086 Mode: The 80386 can switch rapidly between its
+protected mode and V86 mode, giving it the ability to multiprogram 8086
+programs along with "native mode" 32-bit programs.
+
+Chapter 16  Mixing 16-Bit and 32-Bit Code: Even within a program or task,
+the 80386 can mix 16-bit and 32-bit modules. Furthermore, any given module
+can utilize both 16-bit and 32-bit operands and addresses.
+
+
+1.1.4  Part IV  Instruction Set
+
+Parts I, II, and III present overviews of the instructions as they relate
+to specific aspects of the architecture, but this part presents the
+instructions in alphabetical order, providing the detail needed by
+assembly-language programmers and programmers of debuggers, compilers,
+operating systems, etc. Instruction descriptions include algorithmic
+description of operation, effect of flag settings, effect on flag settings,
+effect of operand- or address-size attributes, effect of processor modes,
+and possib

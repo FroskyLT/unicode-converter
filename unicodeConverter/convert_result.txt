@@ -1,0 +1,3 @@
+UNICODE: U+007B
+UTF-8: 7B
+CHAR: {
