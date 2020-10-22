@@ -8,6 +8,7 @@
 
 using namespace std;
 
+
 struct Data {
 	int DEC = 0;
 	vector<char> BIN;
@@ -20,15 +21,18 @@ void uni_to_utf8(vector<char> bin, int dec, string& utf);
 
 void hex_to_bin(vector<char>& bin, string hex);
 int bin_to_dec(vector<char> bin);
+vector<char> hex_to_bytes(const string& hex);
 
 int main()
 {
+
 	bool condition = true;
 	while (condition)
 	{
+		system("CLS");
 		int temp;
 		cout << "1. change DEC -> UTF-8" << endl;
-		cout << "2. convert 368intel.txt file from CP437 to UTF-8 and print it in new file" << endl;
+		cout << "2. convert 368intel.txt file from CP437 to UTF-8 and print in new file" << endl;
 		cout << "3. exit" << endl;
 		cin >> temp;
 
@@ -57,7 +61,7 @@ int main()
 
 			cout << endl; fr << endl;
 			cout << "CHAR: " << char(data.DEC) << endl; fr << "CHAR: " << char(data.DEC);
-			cout << "You can check Your convert_result.txt\n\n";
+			cout << "Check Your convert_result.txt\n\n";
 			fr.close();
 
 			cout << "Do you want to continue?\n";
@@ -82,29 +86,37 @@ int main()
 			while (cp >> cpHex >> cpDec) CP437[cpDec] = cpHex;
 			cp.close();
 
+			cout << endl << "Wait a second...";
 			while (fd.get(currentSym))
 			{
 				data.DEC = currentSym;
 				if (data.DEC < 0)
 				{
-					data.DEC = 256 + data.DEC;
+					data.DEC += 256;
 					it = CP437.find(data.DEC);
-					if (it != CP437.end())
-						data.UNI = it->second;
+					if (it != CP437.end()) data.UNI = it->second;
 
 					hex_to_bin(data.BIN, data.UNI);
 					data.DEC = bin_to_dec(data.BIN);
+					uni_to_utf8(data.BIN, data.DEC, data.UTF8);
+					
+					vector<char> bytes = hex_to_bytes(data.UTF8);
+
+					for (auto it : bytes) fr << it;
 				}
 				else fr << currentSym;
 			}
+			fd.close();
+			fr.close();
 
-			cout << "done";
-			condition = false;
-			/* stringa konvertuot i baitu masyva
-			vektoriaus 1 narys veinas baitas
-			stringa issakidyt baitas, i koki vektoriu,
-			is baitu vektoriu jau konvertuojam i txt faila(is karto padarom charais elementus)
-			(char)Code[i] <- byte Code[3] = {0x00 ,0x01 , 0x83};*/
+			system("CLS");
+			cout << "Check Your output.txt\n\n";
+
+			cout << "Do you want to continue?\n";
+			cout << "1. Yes\n";
+			cout << "2. No\n";
+			cin >> temp;
+			if (temp != 1) condition = false;
 		}
 		else {
 			condition = false;
@@ -138,8 +150,9 @@ int bin_to_dec(vector<char> bin)
 
 	for (int i = bin.size() - 1; i >= 0; i--)
 	{
-		int temp = bin[i] - '0';
-		dec += (temp * pow(2, j));
+		int tempBin = bin[i] - '0', tempPow;
+		tempPow = (int)pow(2, j);
+		dec += (tempBin * tempPow);
 		j++;
 	}
 
@@ -201,7 +214,7 @@ void hex_to_bin(vector<char>& bin, string hex)
 void uni_to_utf8(vector<char> bin, int dec, string& utf)
 {
 	vector<char> utfbin;
-
+	utf = {};
 	if (dec < 128) { //1 byte 
 		for (int i = 0; i < 8; i++)
 		{
@@ -282,4 +295,16 @@ void uni_to_utf8(vector<char> bin, int dec, string& utf)
 	//for (auto it : utfbin) cout << it;
 
 	bin_to_hex(utfbin, utf);
+}
+
+vector<char> hex_to_bytes(const string& hex) {
+	vector<char> bytes;
+
+	for (unsigned int i = 0; i < hex.length(); i += 2) {
+		string byteString = hex.substr(i, 2);
+		char byte = (char)strtol(byteString.c_str(), NULL, 16);
+		bytes.push_back(byte);
+	}
+
+	return bytes;
 }
